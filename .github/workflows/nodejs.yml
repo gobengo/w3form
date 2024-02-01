@@ -19,4 +19,10 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
+    - run: npm i @web3-storage/w3cli
+    - run: |
+        npx w3 space add "$W3_PROOF"
+      env:
+        W3_PROOF: ${{ vars.W3_PROOF }}
+        W3_PRINCIPAL: ${{ secrets.W3_PRINCIPAL }}
     - run: npm test
