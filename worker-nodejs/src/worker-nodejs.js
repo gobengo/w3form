@@ -7,6 +7,10 @@ const app = new Hono()
 app.get('/', async ({ newResponse }) => {
   return newResponse('', 200)
 })
+app.post('/', async ({ newResponse, req }) => {
+  const bodyText = await req.text()
+  return newResponse(bodyText, 201)
+})
 app.get('*', serveStatic({
   // serveStatic doesn't let this be an abs path
   root: 'dist/public/'
