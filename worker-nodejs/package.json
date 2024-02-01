@@ -9,7 +9,9 @@
     "dev": "run-p dev:*",
     "dev:worker": "node --watch src/worker-nodejs.js",
     "test": "node --test",
-    "build:tsc": "tsc --build"
+    "build:tsc": "npm run tsc",
+    "check": "npm run tsc",
+    "tsc": "tsc --build"
   },
   "dependencies": {
     "@hono/node-server": "^1.7.0",

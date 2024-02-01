@@ -5,11 +5,12 @@
     "./worker-nodejs"
   ],
   "scripts": {
-    "prepare": "npm run prepare --if-present --workspaces",
+    "check": "npm run check --if-present --workspaces",
     "dev": "npm run dev --if-present --workspaces",
     "lint": "npm run lint --if-present --workspaces",
-    "test": "npm run test --if-present --workspaces",
-    "start": "npm start -w worker-nodejs"
+    "prepare": "npm run prepare --if-present --workspaces",
+    "start": "npm start -w worker-nodejs",
+    "test": "npm run test --if-present --workspaces"
   },
   "engines": {
     "node": "20.x"

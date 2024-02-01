@@ -44,6 +44,11 @@ export class FileStorageW3up {
    * @type {FileStorage['size']}
    */
   get size() {
-    throw new Error('todo')
+    return new Promise((resolve, reject) => {
+      Promise.resolve().then(async () => {
+        const list = await this.w3up.capability.upload.list()
+        return list.size
+      }).then(resolve).catch(reject)
+    })
   }
 }
