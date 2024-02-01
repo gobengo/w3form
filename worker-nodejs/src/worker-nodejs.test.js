@@ -1,5 +1,5 @@
 import { describe, it } from 'node:test'
-import worker from "./worker-nodejs.js"
+import Worker from "./worker-nodejs.js"
 import assert from 'assert'
 import consumers from 'stream/consumers'
 import { Hono } from 'hono'
@@ -9,8 +9,8 @@ import { ReadableStream } from 'stream/web'
 await describe('worker-nodejs', async () => {
 
   await it('responds to http', async () => {
-    const server = await serve({
-      ...worker,
+    const server = serve({
+      ...Worker.create(),
       port: 0,
     })
     await new Promise((resolve) => {
@@ -18,7 +18,7 @@ await describe('worker-nodejs', async () => {
     });
     try {
       const serverUrl = getAddressUrl(server.address())
-      const response = await worker.fetch(new Request(serverUrl))
+      const response = await fetch(new Request(serverUrl))
       assert.equal(response.status, 200)
     } finally {
       server.close()
@@ -26,7 +26,7 @@ await describe('worker-nodejs', async () => {
   })
 
   await it('responds 201 to sending form over http', async () => {
-    const server = serve({ ...worker, port: 0, })
+    const server = serve({ ...Worker.create(), port: 0, })
     await new Promise((resolve) => { server.addListener('listening', () => resolve(undefined)) });
     try {
       const serverUrl = getAddressUrl(server.address())
@@ -52,7 +52,7 @@ await describe('worker-nodejs', async () => {
         method: 'post',
         body: formData,
       })
-      const response = await worker.fetch(formRequest)
+      const response = await fetch(formRequest)
       assert.equal(response.status, 201)
       const responseText = await response.text()
       assert.ok(responseText.includes('0000'))
