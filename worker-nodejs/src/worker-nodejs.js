@@ -47,7 +47,7 @@ export class W3FormWorker {
       const body = await req.parseBody()
       for (const [fieldName, fieldValue] of Object.entries(body)) {
         if (fieldValue instanceof File) {
-          this.#options.files.set(fieldName, Promise.resolve(fieldValue))
+          await this.#options.files.set(fieldName, Promise.resolve(fieldValue))
         }
       }
       /**

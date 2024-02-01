@@ -10,6 +10,7 @@ import { fileURLToPath } from 'url'
 import path from 'path'
 import { getAddressUrl } from './web.js'
 import { FileStorageMap } from './filestorage.js'
+import { readPackageJson } from './fs-nodejs.js'
 
 await describe('worker-nodejs', async () => {
 
@@ -37,19 +38,6 @@ await describe('worker-nodejs', async () => {
     try {
       const serverUrl = getAddressUrl(server.address())
       const formData = new FormData
-      /**
-       * @param {URL} fileUrl
-       * @param {string} [type]
-       */
-      const read = (fileUrl, type) => new File(
-        [new Blob([readFileSync(fileURLToPath(fileUrl))])],
-        path.basename(fileUrl.toString()),
-        { type }
-      )
-      const readPackageJson = () => read(
-        new URL('../package.json', import.meta.url),
-        'application/json',
-      )
       formData.append('file1', readPackageJson())
       formData.append('file2', readPackageJson())
       const formRequest = new Request(serverUrl, {

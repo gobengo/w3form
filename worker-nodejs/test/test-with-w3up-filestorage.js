@@ -23,10 +23,10 @@ await test('can use w3form with w3up', async () => {
     const packageJson = readPackageJson()
     const formData = new FormData()
     formData.append('file', packageJson)
-    const response = await fetch(url, {
+    const response = await fetch(new Request(url, {
       method: 'post',
       body: formData
-    })
+    }))
     console.log('response', response)
   }
 })
