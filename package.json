@@ -1,0 +1,19 @@
+{
+  "name": "w3form",
+  "type": "module",
+  "workspaces": [
+    "./worker-nodejs"
+  ],
+  "scripts": {
+    "prepare": "npm run prepare --if-present --workspaces",
+    "dev": "npm run dev --if-present --workspaces",
+    "test": "npm run test --if-present --workspaces",
+    "start": "npm start -w worker-nodejs"
+  },
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+  }
+}
+
