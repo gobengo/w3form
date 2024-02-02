@@ -2,7 +2,9 @@
   "name": "w3form",
   "type": "module",
   "workspaces": [
-    "./worker-nodejs"
+    "./w3form-core",
+    "./w3form-nodejs",
+    "./w3form-workerd"
   ],
   "scripts": {
     "check": "npm run check --if-present --workspaces",

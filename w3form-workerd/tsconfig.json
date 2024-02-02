@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "node",
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
@@ -12,10 +12,14 @@
     "lib": [
       "esnext"
     ],
+    "types": [
+      "node",
+    ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"
   },
-  "include": ["src", "test"],
+  "include": ["src"],
   "references": [
+    { "path": "../w3form-core" }
   ]
 }

@@ -9,10 +9,10 @@ import { FileStorage } from './filestorage.js'
  */
 export class FileStorageW3up {
   /**
-   * @param {W3upClient} w3up
+   * @param {W3upClient|Promise<W3upClient>} w3up
    */
   static async create(w3up) {
-    return new FileStorageW3up(w3up)
+    return new FileStorageW3up(await w3up)
   }
   /**
    * @param {W3upClient} w3up

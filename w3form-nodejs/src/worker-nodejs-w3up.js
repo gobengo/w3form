@@ -2,7 +2,7 @@ import { fileURLToPath } from "url"
 import { serve } from '@hono/node-server'
 import w3form from './worker-nodejs.js'
 import { getW3upClient } from "./w3up.js"
-import { FileStorageW3up } from "./filestorage-w3up.js"
+import { FileStorageW3up } from "../../w3form-core/filestorage-w3up.js"
 
 async function main() {
   const w3up = await getW3upClient()

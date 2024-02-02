@@ -1,5 +1,5 @@
 {
-  "name": "w3form-worker-nodejs",
+  "name": "w3form-nodejs",
   "type": "module",
   "version": "0.0.0",
   "main": "index.js",

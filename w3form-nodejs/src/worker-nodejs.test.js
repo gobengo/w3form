@@ -9,7 +9,7 @@ import { createReadStream, readFile, readFileSync } from 'fs'
 import { fileURLToPath } from 'url'
 import path from 'path'
 import { getAddressUrl } from './web.js'
-import { FileStorageMap } from './filestorage.js'
+import { FileStorageMap } from '../../w3form-core/filestorage.js'
 import { readPackageJson } from './fs-nodejs.js'
 
 await describe('worker-nodejs', async () => {
