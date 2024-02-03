@@ -1,0 +1,6 @@
+name = "w3form"
+main = "dist/worker.js"
+compatibility_date = "2024-02-02"
+
+[build]
+command = "npm run build"

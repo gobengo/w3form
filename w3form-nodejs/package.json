@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node src/worker-nodejs.js",
+    "start": "node src/worker-nodejs-w3up.js",
     "build": "run-p build:*",
     "dev": "run-p dev:*",
     "dev:worker": "node --watch src/worker-nodejs-w3up.js",

@@ -16,9 +16,9 @@ export async function getW3upClient({ W3_PRINCIPAL, W3_PROOF }={}) {
   const principal = W3_PRINCIPAL ? ed25519.parse(W3_PRINCIPAL) : await ed25519.generate()
   const store = new StoreMemory
   const w3up = await W3UP.create({ principal, store })
-  // if (W3_PROOF) {
-  //   await w3up.addSpace(await parseW3Proof(W3_PROOF))
-  // }
+  if (W3_PROOF) {
+    await w3up.addSpace(await parseW3Proof(W3_PROOF))
+  }
   return { w3up, store, principal }
 }
 
