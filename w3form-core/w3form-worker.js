@@ -32,7 +32,6 @@ export class W3FormWorker {
    * @param {Request} request 
    */
   fetch = async(request) => {
-    console.log('calling fetch on w3form-core')
     const app = new Hono()
     app.get('/', async ({ newResponse }) => {
       const html = `
@@ -62,7 +61,6 @@ export class W3FormWorker {
     })
     app.post('/', async ({ newResponse, req }) => {
       const body = await req.parseBody()
-      console.log('parsed body', body)
       let authorization;
       if (body.authorization) {
         // this is a special field name that will never be passed along
