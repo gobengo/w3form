@@ -12,7 +12,7 @@
     "build:tsc": "tsc --build",
     "dev:esbuild": "npm run build:esbuild -- --watch",
     "dev:wrangler": "wrangler pages dev dist --live-reload",
-    "deploy:wrangler": "wrangler pages publish dist"
+    "deploy:wrangler": "npx wrangler deploy src/worker.js --compatibility-date 2024-02-02 --name w3form"
   },
   "dependencies": {
     "hono": "^3.12.5",

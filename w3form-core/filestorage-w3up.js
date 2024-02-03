@@ -38,7 +38,14 @@ export class FileStorageW3up {
       await this.w3up.addSpace(options.authorization)
     }
     const file = await v
-    const link = await this.w3up.uploadFile(file)
+    console.log('doing uploadFile()', { file })
+    try {
+      const link = await this.w3up.uploadFile(file)
+      console.log('did uploadFile()', { link })
+    } catch (error) {
+      console.error('error doing uploadFile()', error)
+      throw error
+    }
   }
   /**
    * @type {FileStorage['has']}
