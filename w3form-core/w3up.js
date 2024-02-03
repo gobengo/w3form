@@ -1,4 +1,4 @@
-import * as w3up from '@web3-storage/w3up-client'
+import * as W3UP from '@web3-storage/w3up-client'
 import * as ed25519 from '@ucanto/principal/ed25519'
 import { StoreMemory } from "@web3-storage/access/stores/store-memory";
 import { CID } from 'multiformats/cid'
@@ -7,14 +7,19 @@ import { identity } from 'multiformats/hashes/identity'
 import { CarReader } from '@ipld/car'
 import { importDAG } from '@ucanto/core/delegation'
 
-export async function getW3upClient() {
-  if ( ! process.env.W3_PRINCIPAL) throw new Error('process.env must have W3_PRINCIPAL')
-  if ( ! process.env.W3_PROOF) throw new Error('process.env must have W3_PROOF')
-  const principal = ed25519.parse(process.env.W3_PRINCIPAL)
+/**
+ * @param {object} env
+ * @param {string|undefined} [env.W3_PRINCIPAL]
+ * @param {string|undefined} [env.W3_PROOF]
+ */
+export async function getW3upClient({ W3_PRINCIPAL, W3_PROOF }={}) {
+  const principal = W3_PRINCIPAL ? ed25519.parse(W3_PRINCIPAL) : await ed25519.generate()
   const store = new StoreMemory
-  const w3 = await w3up.create({ principal, store })
-  w3.addSpace(await parseW3Proof(process.env.W3_PROOF))
-  return w3
+  const w3up = await W3UP.create({ principal, store })
+  // if (W3_PROOF) {
+  //   await w3up.addSpace(await parseW3Proof(W3_PROOF))
+  // }
+  return { w3up, store, principal }
 }
 
 /**

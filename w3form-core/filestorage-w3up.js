@@ -28,11 +28,19 @@ export class FileStorageW3up {
   }
   /**
    * @type {FileStorage['set']}
+   * @param {object} [options]
+   * @param {unknown} [options.authorization]
    */
-  set = async (k, v) => {
+  set = async (k, v, options={}) => {
+    if (options.authorization) {
+      console.log('w3up.addSpace for set option authorization', options.authorization)
+      // @ts-expect-error unknown vs required Delegation. Only pass this a UCAN..
+      await this.w3up.addSpace(options.authorization)
+    }
     const file = await v
-    const link = await this.w3up.uploadFile(file)
-    console.log('uploaded file', { file, link })
+    // console.log('about to upload', { file })
+    // const link = await this.w3up.uploadFile(file)
+    // console.log('uploaded file', { file, link })
   }
   /**
    * @type {FileStorage['has']}

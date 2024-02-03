@@ -12,7 +12,8 @@
     "emitDeclarationOnly": true,
     "outDir": "dist",
     "lib": [
-      "esnext"
+      "esnext",
+      "DOM"
     ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"

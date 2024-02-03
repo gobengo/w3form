@@ -1,13 +1,7 @@
 import { describe, it } from 'node:test'
-import Worker from "./worker-nodejs.js"
+import {W3FormWorker} from "w3form-core"
 import assert from 'assert'
-import consumers from 'stream/consumers'
-import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
-import { ReadableStream } from 'stream/web'
-import { createReadStream, readFile, readFileSync } from 'fs'
-import { fileURLToPath } from 'url'
-import path from 'path'
 import { getAddressUrl } from './web.js'
 import { FileStorageMap } from '../../w3form-core/filestorage.js'
 import { readPackageJson } from './fs-nodejs.js'
@@ -16,7 +10,7 @@ await describe('worker-nodejs', async () => {
 
   await it('responds to http', async () => {
     const server = serve({
-      ...Worker.create(),
+      ...W3FormWorker.create(),
       port: 0,
     })
     await new Promise((resolve) => {
@@ -33,7 +27,7 @@ await describe('worker-nodejs', async () => {
 
   await it('responds 201 to sending form over http', async () => {
     const files = FileStorageMap.create()
-    const server = serve({ ...Worker.create({ files }), port: 0, })
+    const server = serve({ ...W3FormWorker.create({ files, id: undefined }), port: 0, })
     await new Promise((resolve) => { server.addListener('listening', () => resolve(undefined)) });
     try {
       const serverUrl = getAddressUrl(server.address())

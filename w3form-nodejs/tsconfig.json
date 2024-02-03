@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
@@ -12,10 +12,14 @@
     "lib": [
       "esnext"
     ],
+    "types": [
+      "node",
+    ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"
   },
   "include": ["src", "test", "../w3form-core/filestorage.js", "../w3form-core/filestorage-w3up.js"],
   "references": [
+    { "path": "../w3form-core" }
   ]
 }

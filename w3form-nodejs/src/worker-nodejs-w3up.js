@@ -1,14 +1,18 @@
 import { fileURLToPath } from "url"
 import { serve } from '@hono/node-server'
-import w3form from './worker-nodejs.js'
-import { getW3upClient } from "./w3up.js"
+import {W3FormWorker} from 'w3form-core'
+import { getW3upClient } from "w3form-core/w3up"
 import { FileStorageW3up } from "../../w3form-core/filestorage-w3up.js"
 
 async function main() {
-  const w3up = await getW3upClient()
+  // @ts-expect-error process.env has weird type
+  const {w3up, principal} = await getW3upClient(process.env)
   const files = await FileStorageW3up.create(w3up)
   serve({
-    ...w3form.create({ files }),
+    ...W3FormWorker.create({
+      files,
+      id: principal.did(),
+    }),
     port: process.env.PORT ? parseInt(process.env.PORT, 10) : 0,
     hostname: process.env.HTTP_HOSTNAME || undefined,
   }, (info) => {

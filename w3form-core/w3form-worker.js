@@ -1,7 +1,14 @@
 import { Hono } from "hono"
-import { FileStorage, FileStorageMap } from "./filestorage"
+import { FileStorage, FileStorageMap } from "./filestorage.js"
+import { createDelegationFromCar } from "./ucan.js"
 
 export class W3FormWorkerOptions {
+  /**
+   * identifier of the worker.
+   * e.g. if this is a DID, clients can issue UCANs to it.
+   * @type {string|undefined}
+   */
+  id
   /** @type {FileStorage} */
   files = FileStorageMap.create()
 }
@@ -30,11 +37,22 @@ export class W3FormWorker {
     app.get('/', async ({ newResponse }) => {
       const html = `
         <!doctype html>
+        <h1>w3form</h1>
+        ${this.#options.id ? `
+        <dl>
+          <dt>id</dt>
+          <dd>${this.#options.id}</dd>
+        </dl>
+        ` : ''}
         <form
           enctype="multipart/form-data"
           method="post"
           >
-          <input name="file" type="file" />
+          <dl>
+            <dt>file to upload</dt><dd><input name="file" type="file" /></dd>
+          ${this.#options.id ? `
+            <dt>authorization (e.g. UCAN)</dt><dd><input name="authorization" type="file" /></dd>
+          ` : ''}
           <input type="submit" />
         </form>
       `
@@ -44,10 +62,37 @@ export class W3FormWorker {
     })
     app.post('/', async ({ newResponse, req }) => {
       const body = await req.parseBody()
-      for (const [fieldName, fieldValue] of Object.entries(body)) {
-        if (fieldValue instanceof File) {
-          await this.#options.files.set(fieldName, Promise.resolve(fieldValue))
+      console.log('parsed body', body)
+      let authorization;
+      if (body.authorization) {
+        // this is a special field name that will never be passed along
+        if (body.authorization instanceof File) {
+          authorization = await createDelegationFromCar(body.authorization.stream())
+        } else {
+          console.warn('got authorization field, but with unsupported value', body.authorization)
         }
+      }
+      try {
+        for (const [fieldName, fieldValue] of Object.entries(body)) {
+          switch (fieldName) {
+            case "authorization":
+              // this is a special field name that will never be passed along
+              break;
+            default:
+              if (fieldValue instanceof File) {
+                await this.#options.files.set(fieldName, Promise.resolve(fieldValue), { authorization })
+              }
+          }
+        }
+      } catch (error) {
+        if (String(error).match(/missing current space/)) {
+          console.warn('unable to upload file for form submission', error)
+          return newResponse(
+            'w3form server has no space configured. Cant upload. Provide space authorization in the request, or run w3form with W3_PROOF.',
+            500
+          )
+        }
+        throw error
       }
       /**
        * @param {File|string} file

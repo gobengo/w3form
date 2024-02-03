@@ -16,8 +16,10 @@ export class FileStorage {
   /**
    * @param {string} k 
    * @param {Promise<File>} f
+   * @param {object} [options]
+   * @param {unknown} [options.authorization]
    */
-  async set(k, f) { throw new Error('not implemented ')}
+  async set(k, f, options) { throw new Error('not implemented ')}
   /** @private */
   constructor() {}
 }

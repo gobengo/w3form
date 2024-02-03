@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowJs": true,
     "checkJs": true,
@@ -11,9 +11,6 @@
     "skipLibCheck": true,
     "lib": [
       "esnext"
-    ],
-    "types": [
-      "node",
     ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx"

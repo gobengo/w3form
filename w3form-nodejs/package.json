@@ -7,7 +7,7 @@
     "start": "node src/worker-nodejs.js",
     "build": "run-p build:*",
     "dev": "run-p dev:*",
-    "dev:worker": "node --watch src/worker-nodejs.js",
+    "dev:worker": "node --watch src/worker-nodejs-w3up.js",
     "test": "node --test",
     "build:tsc": "npm run tsc",
     "check": "npm run tsc",
