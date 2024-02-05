@@ -28,6 +28,8 @@ export class FileStorageW3up {
   }
   /**
    * @type {FileStorage['set']}
+   * @param {string} k
+   * @param {unknown} v
    * @param {object} [options]
    * @param {unknown} [options.authorization]
    */
@@ -38,6 +40,9 @@ export class FileStorageW3up {
       await this.w3up.addSpace(options.authorization)
     }
     const file = await v
+    if ( ! (file instanceof File)) {
+      throw new Error('value must be a File')
+    }
     console.log('doing uploadFile()', { file })
     try {
       const link = await this.w3up.uploadFile(file)

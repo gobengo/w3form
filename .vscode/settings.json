@@ -1,0 +1,7 @@
+{
+  "eslint.workingDirectories": [
+    "./w3form-core",
+    "./w3form-nodejs",
+    "./w3form-workerd"
+  ]
+}

@@ -94,7 +94,6 @@ export class W3FormWorker {
       }
       /**
        * @param {File|string} file
-       * @returns 
        */
       function renderFile(file) {
         if (typeof file === 'string') {
@@ -123,9 +122,8 @@ export class W3FormWorker {
             ${fileOrStringList.map(f => {
               const rendered = renderFileOrString(f)
               return `<li>${rendered}</li>`
-            })}
+            }).join('\n')}
             </ul>`
-            return 
           }
           if (Array.isArray(f)) {
             return renderFileOrStringList(f)
