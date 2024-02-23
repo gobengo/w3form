@@ -1,6 +1,10 @@
 # w3form
 
-Upload to your web3.storage space from an html form using a UCAN delegation as auth.
+Renders an HTML Form to allow a user to provide a UCAN delegation and a File to upload to web3.storage.
+
+The server has a stable signer DID set via `W3_PRINCIPAL` in the env.
+
+Optionally set `W3_PROOF` to predefine the delegation to use. This would allow _anyone_ to upload to your space!
 
 ## Usage
 
@@ -16,7 +20,7 @@ w3 delegation create $w3form --can store/add --can upload/add > w3form.ucan.car
 - submit the form
 - go look in the space that was active when you did w3 delegation create ... using w3 ls or using console.web3.storage
 - try 
-```
+```shell
 curl https://w3form.bengo.workers.dev/ -F authorization=@/private/tmp/space-delegation-1706918136.ucan.car -F file=@/private/tmp/benfile.jpg
 ```
 
